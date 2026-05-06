@@ -1,0 +1,19 @@
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+    proxy: {
+      "/api": {
+        target: "http://20.207.122.201/evaluation-service",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+        headers: {
+          Connection: "keep-alive",
+        },
+      },
+    },
+  },
+});
